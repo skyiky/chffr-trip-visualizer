@@ -4,7 +4,7 @@ var data = require('./trips/2016-07-02--11-56-24.json');
 
 const mapStyles = {
   width: '100%',
-  height: '100%'
+  height: '100%',
 };
 
 export class MapContainer extends Component {
@@ -30,15 +30,68 @@ export class MapContainer extends Component {
     }
   };
 
-  createPolylinePath = () => {
+  createPolylinePath = (aLat, aLng, bLat, bLng) => {
     let path = [];
 
-    for (let i = 0; i < data.coords.length; i++) {
-      let latlon = {lat: data.coords[i].lat, lng: data.coords[i].lng};
-      path.push(latlon);
-    }
+    let latlonA = {lat: aLat, lng: aLng};
+    let latlonB = {lat: bLat, lng: bLng};
+
+    path.push(latlonA);
+    path.push(latlonB);
 
     return path;
+  };
+
+  pathColor = (speed) => {
+    if (speed < 1) {
+      return "#FF0000"
+    } else if (speed < 5) {
+      return "#FF3300"
+    } else if (speed < 10) {
+      return "#ff6600"
+    } else if (speed < 15) {
+      return "#ff9900"
+    } else if (speed < 20) {
+      return "#FFCC00"
+    } else if (speed < 30) {
+      return "#FFFF00"
+    } else if (speed < 40) {
+      return "#ccff00"
+    } else if (speed < 50) {
+      return "#99ff00"
+    } else if (speed < 60) {
+      return "#66ff00"
+    } else if (speed < 70) {
+      return "#33ff00"
+    } else {
+      return "#00FF00"
+    }
+  };
+
+  createPolyline = () => {
+    let polylines = [];
+
+    for (let i = 1; i < data.coords.length; i+=2) {
+      let aLat = data.coords[i-1].lat;
+      let aLng = data.coords[i-1].lng;
+
+      let bLat = data.coords[i].lat;
+      let bLng = data.coords[i].lng;
+
+      let speedAverage = (data.coords[i-1].speed + data.coords[i].speed)/2;
+
+      polylines.push(
+        <Polyline
+          path={this.createPolylinePath(aLat, aLng, bLat, bLng)}
+          strokeColor={this.pathColor(speedAverage)}
+          strokeOpacity={1}
+          strokeWeight={5}
+          key={i/2}
+        />
+      );
+    }
+
+    return polylines;
   };
 
   render() {
@@ -66,11 +119,7 @@ export class MapContainer extends Component {
           </div>
         </InfoWindow>
 
-        <Polyline
-          path={this.createPolylinePath()}
-          strokeColor="#0000FF"
-          strokeOpacity={0.8}
-          strokeWeight={2} />
+        {this.createPolyline()}
 
       </Map>
     );
@@ -78,5 +127,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey:
+  apiKey: 'AIzaSyBKDop5hhdUm7i9gwOHU-PAUM7rNhIrY1M'
 })(MapContainer);
