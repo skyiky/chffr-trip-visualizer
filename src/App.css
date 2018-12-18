@@ -1,0 +1,7 @@
+.sidebar-container-parent {
+  z-index: 2;
+}
+
+.map-container-parent {
+  margin-left: 300px;
+}

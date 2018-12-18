@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import { Map, GoogleApiWrapper, InfoWindow, Marker, Polyline } from 'google-maps-react';
-import InfoPanelContainer from './InfoPanelContainer';
-var data = require('./trips/2016-07-03--11-48-40');
+import PropTypes from 'prop-types';
+import {Map, GoogleApiWrapper, Polyline} from 'google-maps-react';
+import './App.css';
+
+var data = require('./trips/2016-07-02--11-56-24');
 
 const mapStyles = {
   width: '100%',
@@ -11,8 +13,8 @@ const mapStyles = {
 export class MapContainer extends Component {
   state = {
     currentLatLng: {
-      lat: 0,
-      lng: 0
+      lat: data.coords[0].lat,
+      lng: data.coords[0].lng
     }
   };
 
@@ -74,22 +76,22 @@ export class MapContainer extends Component {
   createPolyline = () => {
     let polylines = [];
 
-    for (let i = 1; i < data.coords.length; i+=2) {
-      let aLat = data.coords[i-1].lat;
-      let aLng = data.coords[i-1].lng;
+    for (let i = 1; i < data.coords.length; i += 2) {
+      let aLat = data.coords[i - 1].lat;
+      let aLng = data.coords[i - 1].lng;
 
       let bLat = data.coords[i].lat;
       let bLng = data.coords[i].lng;
 
-      let speedAverage = (data.coords[i-1].speed + data.coords[i].speed)/2;
+      let speedAverage = (data.coords[i - 1].speed + data.coords[i].speed) / 2;
 
       polylines.push(
         <Polyline
           path={this.createPolylinePath(aLat, aLng, bLat, bLng)}
           strokeColor={this.pathColor(speedAverage)}
           strokeOpacity={1}
-          strokeWeight={5}
-          key={i/2}
+          strokeWeight={6}
+          key={i / 2}
         />
       );
     }
@@ -97,33 +99,46 @@ export class MapContainer extends Component {
     return polylines;
   };
 
+  resetCenter = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      currentLatLng: {
+        ...prevState.currentLatLng,
+        lat: data.coords[0].lat,
+        lng: data.coords[0].lng
+      }
+    }))
+  };
+
   render() {
-    {this.getGeoLocation()} // get current user location
+    //{this.getGeoLocation()} // get current user location
 
     return (
       <div>
-      <Map
-        google={this.props.google}
-        zoom={10}
-        style={mapStyles}
-        initialCenter={{
-          lat: this.state.currentLatLng.lat,
-          lng: this.state.currentLatLng.lng
-        }}
-        center={{
-          lat: this.state.currentLatLng.lat,
-          lng: this.state.currentLatLng.lng
-        }}
-      >
-        {this.createPolyline()}
-      </Map>
-
-      <InfoPanelContainer/>
+        <Map
+          google={this.props.google}
+          zoom={11}
+          style={mapStyles}
+          initialCenter={{
+            lat: this.state.currentLatLng.lat,
+            lng: this.state.currentLatLng.lng
+          }}
+          center={{
+            lat: this.state.currentLatLng.lat,
+            lng: this.state.currentLatLng.lng
+          }}
+        >
+          {this.createPolyline()}
+        </Map>
       </div>
     );
   }
 }
 
+MapContainer.propTypes = {
+
+};
+
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBKDop5hhdUm7i49gwOHU-PAUM7rNhIrY1M'
+  apiKey: ''
 })(MapContainer);
