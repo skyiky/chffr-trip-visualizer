@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Map, GoogleApiWrapper, InfoWindow, Marker, Polyline } from 'google-maps-react';
-var data = require('./trips/2016-07-02--11-56-24.json');
+import { Map, GoogleApiWrapper, InfoWindow, Marker, Polyline } from 'google-maps-react';
+import InfoPanelContainer from './InfoPanelContainer';
+var data = require('./trips/2016-07-03--11-48-40');
 
 const mapStyles = {
   width: '100%',
@@ -9,24 +10,26 @@ const mapStyles = {
 
 export class MapContainer extends Component {
   state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {}
+    currentLatLng: {
+      lat: 0,
+      lng: 0
+    }
   };
 
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
+  getGeoLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          console.log(position.coords);
+          this.setState(prevState => ({
+            currentLatLng: {
+              ...prevState.currentLatLng,
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            }
+          }))
+        }
+      )
     }
   };
 
@@ -95,33 +98,28 @@ export class MapContainer extends Component {
   };
 
   render() {
+    {this.getGeoLocation()} // get current user location
+
     return (
+      <div>
       <Map
         google={this.props.google}
         zoom={10}
         style={mapStyles}
         initialCenter={{
-          lat: 37.7749,
-          lng: -122.4194
+          lat: this.state.currentLatLng.lat,
+          lng: this.state.currentLatLng.lng
+        }}
+        center={{
+          lat: this.state.currentLatLng.lat,
+          lng: this.state.currentLatLng.lng
         }}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'San Francisco'}
-        />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>
-
         {this.createPolyline()}
-
       </Map>
+
+      <InfoPanelContainer/>
+      </div>
     );
   }
 }
