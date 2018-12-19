@@ -1,7 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 .sidebar-container-parent {
-  z-index: 2;
+    margin-top: 50px;
+}
+
+.sidebar-container-button {
+    /*position: relative;*/ /*breaks transition*/
+    /*z-index: 999;*/
 }
 
 .map-container-parent {
-  margin-left: 300px;
+    min-height: 100%;
+    min-width: 100%;
 }

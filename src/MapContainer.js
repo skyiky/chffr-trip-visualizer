@@ -3,41 +3,24 @@ import PropTypes from 'prop-types';
 import {Map, GoogleApiWrapper, Polyline} from 'google-maps-react';
 import './App.css';
 
-var data = require('./trips/2016-07-02--11-56-24');
-
 const mapStyles = {
   width: '100%',
-  height: '100%',
+  height: '100%'
 };
 
 export class MapContainer extends Component {
-  state = {
-    currentLatLng: {
-      lat: data.coords[0].lat,
-      lng: data.coords[0].lng
-    }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
 
-  getGeoLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          console.log(position.coords);
-          this.setState(prevState => ({
-            currentLatLng: {
-              ...prevState.currentLatLng,
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            }
-          }))
-        }
-      )
-    }
-  };
+    this.createPolylinePath = this.createPolylinePath.bind(this);
+    this.pathColor = this.pathColor.bind(this);
+    this.createPolyline = this.createPolyline.bind(this);
+  }
 
   createPolylinePath = (aLat, aLng, bLat, bLng) => {
     let path = [];
-
     let latlonA = {lat: aLat, lng: aLng};
     let latlonB = {lat: bLat, lng: bLng};
 
@@ -76,56 +59,43 @@ export class MapContainer extends Component {
   createPolyline = () => {
     let polylines = [];
 
-    for (let i = 1; i < data.coords.length; i += 2) {
-      let aLat = data.coords[i - 1].lat;
-      let aLng = data.coords[i - 1].lng;
-
-      let bLat = data.coords[i].lat;
-      let bLng = data.coords[i].lng;
-
-      let speedAverage = (data.coords[i - 1].speed + data.coords[i].speed) / 2;
-
-      polylines.push(
-        <Polyline
-          path={this.createPolylinePath(aLat, aLng, bLat, bLng)}
-          strokeColor={this.pathColor(speedAverage)}
-          strokeOpacity={1}
-          strokeWeight={6}
-          key={i / 2}
-        />
-      );
+    if (this.props.data != null) {
+      for (let i = 1; i < this.props.data.coords.length; i += 2) {
+        let aLat = this.props.data.coords[i - 1].lat;
+        let aLng = this.props.data.coords[i - 1].lng;
+        let bLat = this.props.data.coords[i].lat;
+        let bLng = this.props.data.coords[i].lng;
+        let speedAverage = (this.props.data.coords[i - 1].speed + this.props.data.coords[i].speed) / 2;
+        polylines.push(
+          <Polyline
+            path={this.createPolylinePath(aLat, aLng, bLat, bLng)}
+            strokeColor={this.pathColor(speedAverage)}
+            strokeOpacity={1}
+            strokeWeight={6}
+            key={i / 2}
+          />
+        );
+      }
     }
 
     return polylines;
   };
 
-  resetCenter = () => {
-    this.setState(prevState => ({
-      ...prevState,
-      currentLatLng: {
-        ...prevState.currentLatLng,
-        lat: data.coords[0].lat,
-        lng: data.coords[0].lng
-      }
-    }))
-  };
-
   render() {
-    //{this.getGeoLocation()} // get current user location
 
     return (
       <div>
         <Map
           google={this.props.google}
-          zoom={11}
+          zoom={13}
           style={mapStyles}
           initialCenter={{
-            lat: this.state.currentLatLng.lat,
-            lng: this.state.currentLatLng.lng
+            lat: this.props.currentLatLng.lat,
+            lng: this.props.currentLatLng.lng
           }}
           center={{
-            lat: this.state.currentLatLng.lat,
-            lng: this.state.currentLatLng.lng
+            lat: this.props.currentLatLng.lat,
+            lng: this.props.currentLatLng.lng
           }}
         >
           {this.createPolyline()}
@@ -136,9 +106,11 @@ export class MapContainer extends Component {
 }
 
 MapContainer.propTypes = {
-
+  tripName: PropTypes.string,
+  data: PropTypes.object,
+  currentLatLng: PropTypes.object,
 };
 
 export default GoogleApiWrapper({
-  apiKey: ''
+  apiKey: 'AIzaSyCizD0ZYflf5sFCOCBk9HjQyP1b6N9h2Ls'
 })(MapContainer);
