@@ -120,7 +120,7 @@ export class SidebarComponent extends Component {
           </form>
         </div>
         <div className="sidebar-component-stat-button">
-          <Button variant="outlined">
+          <Button variant="outlined" onClick={this.props.resetCenter}>
             Recenter
           </Button>
         </div>
@@ -131,6 +131,7 @@ export class SidebarComponent extends Component {
 
 SidebarComponent.propTypes = {
   setTripHandler: PropTypes.func,
+  resetCenter: PropTypes.func,
   tripName: PropTypes.string,
   tripList: PropTypes.array,
   avgSpeed: PropTypes.number,

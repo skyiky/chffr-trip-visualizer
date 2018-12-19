@@ -86,11 +86,14 @@ export class SidebarContainer extends Component {
   };
 
   render() {
+    let children = [];
+
     return (
       <Sidebar
         sidebar={
           <SidebarComponent
             setTripHandler={this.setTripHandler}
+            resetCenter={this.props.resetCenter}
             avgSpeed={this.calcAvgSpeed()}
             maxSpeed={this.calcMaxSpeed()}
             distanceTravelled={this.calcDistanceTravelled()}
@@ -119,6 +122,7 @@ export class SidebarContainer extends Component {
         defaultSidebarWidth={0}
         docked={true}
       >
+        {children}
       </Sidebar>
     );
   }
@@ -126,6 +130,7 @@ export class SidebarContainer extends Component {
 
 SidebarContainer.propTypes = {
   setTripHandler: PropTypes.func,
+  resetCenter: PropTypes.func,
   tripName: PropTypes.string,
   tripList: PropTypes.array,
   data: PropTypes.object,

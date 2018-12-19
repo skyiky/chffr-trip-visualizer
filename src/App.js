@@ -85,6 +85,7 @@ export class App extends Component {
         <div className="sidebar-container-parent">
           <SidebarContainer
             setTripHandler={this.setTripHandler}
+            resetCenter={this.resetCenter}
             tripName={this.state.tripName}
             tripList={this.state.tripList}
             data={this.state.data}
