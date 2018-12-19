@@ -24,10 +24,55 @@ export class SidebarContainer extends Component {
     this.props.setTripHandler(e.target.value);
   };
 
+  calcAvgSpeed = (props) => {
+
+  };
+
+  calcMaxSpeed = (props) => {
+
+  };
+
+  calcDistanceTravelled = (props) => {
+
+  };
+
+  calcStartTime = (props) => {
+    // 2016-07-04T21:47:21
+    return this.props.data["start_time"];
+  };
+
+  calcEndTime = (props) => {
+    return this.props.data["end_time"];
+  };
+
+  calcTotalTimeElapsed = (props) => {
+    let startTime = this.props.data["start_time"];
+    startTime = startTime.split("T")[1].split(":");
+
+    let endTime =  this.props.data["end_time"];
+    endTime = endTime.split("T")[1].split(":");
+
+    let result = "";
+
+    for (let i = 0; i < 3; i++) {
+      result += (endTime[i] - startTime[i])
+    }
+
+  };
+
   render() {
     return (
       <Sidebar
-        sidebar={<SidebarComponent/>}
+        sidebar={
+          <SidebarComponent
+            avgSpeed={this.calcAvgSpeed()}
+            maxSpeed={this.calcMaxSpeed()}
+            distanceTravelled={this.calcDistanceTravelled()}
+            startTime={this.calcStartTime()}
+            endTime={this.calcEndTime()}
+            totalTime={this.calcTotalTimeElapsed()}
+          />
+          }
         open={this.state.sidebarOpen}
         onSetOpen={this.onSetSidebarOpen}
         styles={{
@@ -36,7 +81,7 @@ export class SidebarContainer extends Component {
               "background": "white",
               "maxHeight": "600px",
               "margin": "auto 0",
-              "width": "300px",
+              "width": "250px",
 
             },
           overlay: {
@@ -44,6 +89,7 @@ export class SidebarContainer extends Component {
           }
         }}
         transitions={true}
+        defaultSidebarWidth={0}
       >
         <button className="sidebar-container-button" onClick={() => this.onSetSidebarOpen(true)} >
           Open sidebar
@@ -58,6 +104,8 @@ export class SidebarContainer extends Component {
 
 SidebarContainer.propTypes = {
   setTripHandler: PropTypes.func,
+  tripName: PropTypes.string,
+  data: PropTypes.object,
 };
 
 export default SidebarContainer;

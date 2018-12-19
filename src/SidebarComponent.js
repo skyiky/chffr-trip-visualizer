@@ -19,16 +19,32 @@ export class SidebarComponent extends Component {
 
   render() {
     return (
-      <div>
+      <div className="sidebar-component">
         Trip Statistics:
 
+        Average Speed: {this.props.avgSpeed}
+
+        Max Speed: {this.props.maxSpeed}
+
+        Distance Travelled: {this.props.distanceTravelled}
+
+        Start Time: {this.props.startTime}
+
+        End Time: {this.props.endTime}
+
+        Total Trip Time: {this.props.totalTime}
       </div>
     );
   }
 }
 
 SidebarComponent.propTypes = {
-
+  avgSpeed: PropTypes.number,
+  maxSpeed: PropTypes.number,
+  distanceTravelled: PropTypes.number,
+  startTime: PropTypes.string,
+  endTime: PropTypes.string,
+  totalTime: PropTypes.string,
 };
 
 export default SidebarComponent;

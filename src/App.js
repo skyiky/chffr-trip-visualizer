@@ -79,7 +79,11 @@ export class App extends Component {
     return (
       <div>
         <div className="sidebar-container-parent">
-          <SidebarContainer setTripHandler={this.setTripHandler}/>
+          <SidebarContainer
+            setTripHandler={this.setTripHandler}
+            tripName={this.state.tripName}
+            data={this.state.data}
+          />
         </div>
         <div className="map-container-parent">
           <MapContainer
