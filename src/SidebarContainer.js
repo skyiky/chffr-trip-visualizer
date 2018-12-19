@@ -72,6 +72,8 @@ export class SidebarContainer extends Component {
             startTime={this.calcStartTime()}
             endTime={this.calcEndTime()}
             totalTime={this.calcTotalTimeElapsed()}
+            tripName={this.props.tripName}
+            tripList={this.props.tripList}
           />
           }
         open={this.state.sidebarOpen}
@@ -104,6 +106,7 @@ export class SidebarContainer extends Component {
 SidebarContainer.propTypes = {
   setTripHandler: PropTypes.func,
   tripName: PropTypes.string,
+  tripList: PropTypes.array,
   data: PropTypes.object,
 };
 

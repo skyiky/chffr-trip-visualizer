@@ -40,7 +40,9 @@ html, body {
 .sidebar-component-button {
     /*position: relative;*/ /*breaks transition*/
     /*z-index: 999;*/
+    padding: 5px 10px;
 }
+
 
 .map-container-parent {
     min-height: 100%;

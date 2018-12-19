@@ -15,6 +15,7 @@ export class App extends Component {
     super(props);
     this.state = {
       tripName: null,
+      tripList: null,
       data: null,
       currentLatLng: {
         lat: 0,
@@ -27,17 +28,18 @@ export class App extends Component {
     this.resetCenter = this.resetCenter.bind(this);
   }
 
-  setTripHandler = (index) => {
-    let data = require('./trips/' + trips[index]);
+  setTripHandler = (tripName) => {
+    let data = require('./trips/' + tripName);
 
-    this.setState({
-      tripName: trips[index],
+    this.setState((prevState) => ({
+      ...prevState,
+      tripName: tripName,
       data: data,
       currentLatLng: {
-        lat: data.coords[index].lat,
-        lng: data.coords[index].lng,
+        lat: data.coords[0].lat,
+        lng: data.coords[0].lng,
       }
-    });
+    }));
   };
 
   getGeoLocation = () => {
@@ -64,6 +66,7 @@ export class App extends Component {
       let data = require('./trips/' + trips[0]);
       this.setState({
         tripName: trips[0],
+        tripList: trips,
         data: data,
         currentLatLng: {
           lat: data.coords[0].lat,
@@ -81,6 +84,7 @@ export class App extends Component {
           <SidebarContainer
             setTripHandler={this.setTripHandler}
             tripName={this.state.tripName}
+            tripList={this.state.tripList}
             data={this.state.data}
           />
         </div>
