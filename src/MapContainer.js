@@ -106,7 +106,6 @@ export class MapContainer extends Component {
 }
 
 MapContainer.propTypes = {
-  tripName: PropTypes.string,
   data: PropTypes.object,
   currentLatLng: PropTypes.object,
 };

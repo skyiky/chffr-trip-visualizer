@@ -90,7 +90,6 @@ export class App extends Component {
         </div>
         <div className="map-container-parent">
           <MapContainer
-            tripName={this.state.tripName}
             data={this.state.data}
             currentLatLng={this.state.currentLatLng}
           />

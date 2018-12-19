@@ -26,28 +26,16 @@ export class SidebarComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidebarOpen: true,
-      tripDropdownPlaceholder: "Trip Name"
+      sidebarOpen: true
     };
 
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-    this.setTripHandler = this.setTripHandler.bind(this);
     this.createTripListMenuItems = this.createTripListMenuItems.bind(this);
   }
 
   onSetSidebarOpen(open) {
     this.setState({ sidebarOpen: open });
   }
-
-  setTripHandler = (e) => {
-    this.setState(
-      {
-        sidebarOpen: true,
-        tripDropdownPlaceholder: e.target.value.substring(0, e.target.value.length-5)
-      });
-
-    return this.props.setTripHandler;
-  };
 
   createTripListMenuItems = () => {
     let tripList = [];
@@ -99,21 +87,19 @@ export class SidebarComponent extends Component {
 
         <form className={classes.root} autoComplete="off">
           <FormControl className={classes.formControl}>
-            <InputLabel shrink htmlFor="trip-placeholder">
-              {this.state.tripDropdownPlaceholder}
-            </InputLabel>
+            <InputLabel shrink htmlFor="trip-placeholder">Trip Id</InputLabel>
 
             <Select
-              value={this.state.tripName}
-              onChange={this.setTripHandler}
+              value={this.props.tripName}
+              onChange={this.props.setTripHandler}
               displayEmpty
               name="Trip"
               className={classes.selectEmpty}
-              input={<Input name="Trip" id="trip-placeholder" />}
+              input={<Input name={this.props.tripName.substring(0, this.props.tripName.length-5)} id="trip-placeholder" />}
             >
               {this.createTripListMenuItems()}
             </Select>
-            <FormHelperText>Trip Id</FormHelperText>
+            <FormHelperText>YYYY-MM-DD--HH-MM-SS</FormHelperText>
           </FormControl>
         </form>
 
