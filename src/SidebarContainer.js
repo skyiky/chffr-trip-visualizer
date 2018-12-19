@@ -65,6 +65,7 @@ export class SidebarContainer extends Component {
       <Sidebar
         sidebar={
           <SidebarComponent
+            setTripHandler={this.setTripHandler}
             avgSpeed={this.calcAvgSpeed()}
             maxSpeed={this.calcMaxSpeed()}
             distanceTravelled={this.calcDistanceTravelled()}
@@ -90,12 +91,10 @@ export class SidebarContainer extends Component {
         }}
         transitions={true}
         defaultSidebarWidth={0}
+        docked={true}
       >
         <button className="sidebar-container-button" onClick={() => this.onSetSidebarOpen(true)} >
           Open sidebar
-        </button>
-        <button className="sidebar-container-button" onClick={this.setTripHandler} value={2}>
-          test
         </button>
       </Sidebar>
     );

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MapContainer from './MapContainer';
 import SidebarContainer from './SidebarContainer';
-import PropTypes from 'prop-types';
+import 'typeface-roboto';
 import './App.css';
 
 const trips = [
@@ -21,7 +21,6 @@ export class App extends Component {
         lng: 0
       }
     };
-
 
     this.setTripHandler = this.setTripHandler.bind(this);
     this.getGeoLocation = this.getGeoLocation.bind(this);
