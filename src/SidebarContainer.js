@@ -8,16 +8,14 @@ import './App.css';
 export class SidebarContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sidebarOpen: true
-    };
 
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
     this.setTripHandler = this.setTripHandler.bind(this);
-  }
-
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
+    this.calcAvgSpeed = this.calcAvgSpeed.bind(this);
+    this.calcMaxSpeed = this.calcMaxSpeed.bind(this);
+    this.calcDistanceTravelled = this.calcDistanceTravelled.bind(this);
+    this.calcStartTime = this.calcStartTime.bind(this);
+    this.calcEndTime = this.calcEndTime.bind(this);
+    this.calcTotalTimeElapsed = this.calcTotalTimeElapsed.bind(this);
   }
 
   setTripHandler = (e) => {
@@ -26,15 +24,30 @@ export class SidebarContainer extends Component {
   };
 
   calcAvgSpeed = (props) => {
-
+    const {coords} = this.props.data;
+    let x = 0;
+    let y = coords.length;
+    for (let i = 0; i < coords.length; i++) {
+      x += coords[i].speed;
+    }
+    return (x / y);
   };
 
   calcMaxSpeed = (props) => {
-
+    const {coords} = this.props.data;
+    let max = 0;
+    for (let i = 0; i < coords.length; i++) {
+      let x = coords[i].speed;
+      if (x > max) {
+        max = x;
+      }
+    }
+    return max;
   };
 
   calcDistanceTravelled = (props) => {
-
+    const {coords} = this.props.data;
+    return (coords[coords.length - 1].dist - coords[0].dist);
   };
 
   calcStartTime = (props) => {
@@ -50,15 +63,26 @@ export class SidebarContainer extends Component {
     let startTime = this.props.data["start_time"];
     startTime = startTime.split("T")[1].split(":");
 
-    let endTime =  this.props.data["end_time"];
+    let endTime = this.props.data["end_time"];
     endTime = endTime.split("T")[1].split(":");
 
     let result = "";
 
     for (let i = 0; i < 3; i++) {
-      result += (endTime[i] - startTime[i])
+      let x = (Number(endTime[i]) - Number(startTime[i]));
+      if (x < 0) {
+        x = 0;
+      }
+      if (x < 10) {
+        result = result + "0" + x.toString();
+      } else {
+        result = result + x.toString();
+      }
+      if (i !== 2) {
+        result = result + ":";
+      }
     }
-
+    return result;
   };
 
   render() {
@@ -76,16 +100,15 @@ export class SidebarContainer extends Component {
             tripName={this.props.tripName}
             tripList={this.props.tripList}
           />
-          }
-        open={this.state.sidebarOpen}
+        }
         onSetOpen={this.onSetSidebarOpen}
         styles={{
           sidebar:
             {
               "background": "white",
-              "maxHeight": "600px",
+              "maxHeight": "440px",
               "margin": "auto 0",
-              "width": "250px",
+              "width": "260px",
 
             },
           overlay: {
@@ -96,9 +119,6 @@ export class SidebarContainer extends Component {
         defaultSidebarWidth={0}
         docked={true}
       >
-        <button className="sidebar-container-button" onClick={() => this.onSetSidebarOpen(true)} >
-          Open sidebar
-        </button>
       </Sidebar>
     );
   }

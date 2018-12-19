@@ -5,36 +5,26 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import './App.css';
-import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  root: {
-    padding: '5px 10px'
-  },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: '80%',
+    minWidth: '95%',
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
-  },
+  }
 });
 
 export class SidebarComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sidebarOpen: true
-    };
 
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
     this.createTripListMenuItems = this.createTripListMenuItems.bind(this);
-  }
-
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
   }
 
   createTripListMenuItems = () => {
@@ -49,7 +39,7 @@ export class SidebarComponent extends Component {
             value={tripListName}
             key={i}
           >
-            {tripListName.substring(0, tripListName.length-5)}
+            {tripListName.substring(0, tripListName.length - 5)}
           </MenuItem>
         );
       }
@@ -59,50 +49,81 @@ export class SidebarComponent extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <div className="sidebar-component">
         <div className="sidebar-component-nav">
-          Trip Statistics:
+          <h2 className="sidebar-component-nav-heading">Trip Statistics</h2>
         </div>
+        <Divider/>
         <div className="sidebar-component-stat">
-        Average Speed: {this.props.avgSpeed}
+          Average Speed:
+          <div className="sidebar-component-stat-value">
+            {Number(this.props.avgSpeed.toFixed(1))} m/ph
+          </div>
         </div>
+        <Divider/>
         <div className="sidebar-component-stat">
-        Max Speed: {this.props.maxSpeed}
+          Max Speed:
+          <div className="sidebar-component-stat-value">
+            {Number(this.props.maxSpeed.toFixed(1))} m/ph
+          </div>
         </div>
+        <Divider/>
         <div className="sidebar-component-stat">
-        Distance Travelled: {this.props.distanceTravelled}
+          Distance Travelled:
+          <div className="sidebar-component-stat-value">
+            {Number(this.props.distanceTravelled.toFixed(1))} Miles
+          </div>
         </div>
+        <Divider/>
         <div className="sidebar-component-stat">
-        Start Time: {this.props.startTime}
+          Start Time:
+          <div className="sidebar-component-stat-value">
+            {this.props.startTime.replace("T", " ")}
+          </div>
         </div>
+        <Divider/>
         <div className="sidebar-component-stat">
-        End Time: {this.props.endTime}
+          End Time:
+          <div className="sidebar-component-stat-value">
+            {this.props.endTime.replace("T", " ")}
+          </div>
         </div>
+        <Divider/>
         <div className="sidebar-component-stat">
-        Total Trip Time: {this.props.totalTime}
+          Total Trip Time:
+          <div className="sidebar-component-stat-value">
+            {this.props.totalTime}
+          </div>
         </div>
+        <Divider/>
+        <div className="sidebar-component-stat">
+          <form className={classes.root} autoComplete="off">
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink htmlFor="trip-placeholder">Trip Id</InputLabel>
 
-        <form className={classes.root} autoComplete="off">
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink htmlFor="trip-placeholder">Trip Id</InputLabel>
-
-            <Select
-              value={this.props.tripName}
-              onChange={this.props.setTripHandler}
-              displayEmpty
-              name="Trip"
-              className={classes.selectEmpty}
-              input={<Input name={this.props.tripName.substring(0, this.props.tripName.length-5)} id="trip-placeholder" />}
-            >
-              {this.createTripListMenuItems()}
-            </Select>
-            <FormHelperText>YYYY-MM-DD--HH-MM-SS</FormHelperText>
-          </FormControl>
-        </form>
-
+              <Select
+                value={this.props.tripName}
+                onChange={this.props.setTripHandler}
+                displayEmpty
+                name="Trip"
+                className={classes.selectEmpty}
+                input={<Input name={this.props.tripName.substring(0, this.props.tripName.length - 5)}
+                              id="trip-placeholder"/>}
+              >
+                {this.createTripListMenuItems()}
+              </Select>
+              <FormHelperText>YYYY-MM-DD--HH-MM-SS</FormHelperText>
+            </FormControl>
+          </form>
+        </div>
+        <div className="sidebar-component-stat-button">
+          <Button variant="outlined">
+            Recenter
+          </Button>
+        </div>
       </div>
     );
   }
@@ -118,7 +139,6 @@ SidebarComponent.propTypes = {
   startTime: PropTypes.string,
   endTime: PropTypes.string,
   totalTime: PropTypes.string,
-
   classes: PropTypes.object.isRequired,
 };
 

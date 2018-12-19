@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import MapContainer from './MapContainer';
 import SidebarContainer from './SidebarContainer';
 import 'typeface-roboto';
 import './App.css';
 
 const trips = [
-  "2016-07-02--11-56-24.json",  "2017-02-28--20-15-20.json",  "2017-05-28--16-41-55.json",  "2017-08-18--22-04-35.json",  "2017-09-03--10-57-30.json",
-  "2016-07-02--13-09-31.json",  "2017-02-28--20-50-26.json",  "2017-05-29--21-00-46.json",  "2017-08-19--12-21-07.json",  "2017-09-03--23-03-52.json",
-  "2016-07-02--16-01-50.json",  "2017-02-28--22-10-09.json",  "2017-05-29--21-11-04.json",  "2017-08-19--22-10-10.json",  "2017-09-04--11-49-19.json",
+  "2016-07-02--11-56-24.json", "2017-02-28--20-15-20.json", "2017-05-28--16-41-55.json", "2017-08-18--22-04-35.json", "2017-09-03--10-57-30.json",
+  "2016-07-02--13-09-31.json", "2017-02-28--20-50-26.json", "2017-05-29--21-00-46.json", "2017-08-19--12-21-07.json", "2017-09-03--23-03-52.json",
+  "2016-07-02--16-01-50.json", "2017-02-28--22-10-09.json", "2017-05-29--21-11-04.json", "2017-08-19--22-10-10.json", "2017-09-04--11-49-19.json",
 ];
 
 export class App extends Component {
@@ -80,6 +81,7 @@ export class App extends Component {
 
     return (
       <div>
+        <CssBaseline/>
         <div className="sidebar-container-parent">
           <SidebarContainer
             setTripHandler={this.setTripHandler}
@@ -99,7 +101,6 @@ export class App extends Component {
   }
 }
 
-App.propTypes = {
-};
+App.propTypes = {};
 
 export default App;

@@ -11,8 +11,7 @@ const mapStyles = {
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
 
     this.createPolylinePath = this.createPolylinePath.bind(this);
     this.pathColor = this.pathColor.bind(this);

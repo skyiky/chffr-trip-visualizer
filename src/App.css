@@ -14,7 +14,7 @@ html, body {
 .sidebar-container-parent {
     display: flex;
     flex-direction: column;
-    flex-flow: wrap;
+    flex-flow: nowrap;
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
@@ -30,19 +30,27 @@ html, body {
     background-color: #616161;
     color: #ffffff;
     height: 50px;
-    padding: 10px 10px;
+    padding: 12px 10px;
+}
+
+.sidebar-component-nav-heading {
+    margin: auto 0;
 }
 
 .sidebar-component-stat {
-    padding: 5px 10px;
+    padding: 10px 10px;
 }
 
-.sidebar-component-button {
-    /*position: relative;*/ /*breaks transition*/
-    /*z-index: 999;*/
-    padding: 5px 10px;
+.sidebar-component-stat-button {
+    padding: 10px 10px;
+    display: flex;
+    justify-content: center;
 }
 
+.sidebar-component-stat-value {
+    display: inline-block;
+    float: right;
+}
 
 .map-container-parent {
     min-height: 100%;
