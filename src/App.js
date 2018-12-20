@@ -59,7 +59,7 @@ export class App extends Component {
         lat: this.state.data.coords[0].lat,
         lng: this.state.data.coords[0].lng
       }
-    })
+    });
   };
 
   componentWillMount() {
