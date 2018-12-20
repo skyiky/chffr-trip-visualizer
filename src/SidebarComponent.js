@@ -99,7 +99,7 @@ export class SidebarComponent extends Component {
           </div>
         </div>
         <Divider/>
-        <div className="sidebar-component-stat">
+        <div className="sidebar-component-stat-select">
           <form className={classes.root} autoComplete="off">
             <FormControl className={classes.formControl}>
               <InputLabel shrink htmlFor="trip-placeholder">Trip Id</InputLabel>

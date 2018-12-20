@@ -41,6 +41,10 @@ html, body {
     padding: 10px 10px;
 }
 
+.sidebar-component-stat-select {
+    padding: 10px 10px 0 21px;
+}
+
 .sidebar-component-stat-button {
     padding: 10px 10px;
     display: flex;

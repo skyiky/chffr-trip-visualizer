@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Map, GoogleApiWrapper, Polyline, Marker, InfoWindow} from 'google-maps-react';
+import {Map, GoogleApiWrapper, Polyline, Marker} from 'google-maps-react';
 import './App.css';
 
 const dimensions = {
@@ -85,8 +85,7 @@ export class MapContainer extends Component {
 
   getLocationTripEnd = () => {
     const { coords } = this.props.data;
-    let x = {lat: coords[coords.length-1].lat, lng: coords[coords.length-1].lng};
-    return x;
+    return {lat: coords[coords.length-1].lat, lng: coords[coords.length-1].lng};
   };
 
   panToCenter = () => {
