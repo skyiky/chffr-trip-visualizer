@@ -19,7 +19,6 @@ export class SidebarContainer extends Component {
   }
 
   setTripHandler = (e) => {
-    console.log(e.target.value);
     this.props.setTripHandler(e.target.value);
   };
 

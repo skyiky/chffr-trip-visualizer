@@ -17,9 +17,11 @@ export class App extends Component {
       currentLatLng: {
         lat: 0,
         lng: 0
-      }
+      },
+      zoom: 10
     };
 
+    this.calcZoom = this.calcZoom.bind(this);
     this.setTripHandler = this.setTripHandler.bind(this);
     this.getGeoLocation = this.getGeoLocation.bind(this);
     this.resetCenter = this.resetCenter.bind(this);
@@ -27,16 +29,44 @@ export class App extends Component {
 
   setTripHandler = (tripName) => {
     let data = require('./trips/' + tripName);
+    let zoom = this.calcZoom(data);
 
     this.setState((prevState) => ({
       ...prevState,
       tripName: tripName,
       data: data,
       currentLatLng: {
-        lat: data.coords[0].lat,
-        lng: data.coords[0].lng,
-      }
+        lat: data.coords[Math.floor(data.coords.length/2)].lat,
+        lng: data.coords[Math.floor(data.coords.length/2)].lng,
+      },
+      zoom: zoom
     }));
+  };
+
+  calcZoom = (data) => {
+    const {coords} = data;
+    let dist = (coords[coords.length - 1].dist - coords[0].dist);
+    let zoom = 0;
+
+    if (dist < 0.5) {
+      zoom = 16;
+    } else if (dist < 5) {
+      zoom = 14;
+    } else if (dist < 10) {
+      zoom = 13;
+    } else if (dist < 30) {
+      zoom = 12;
+    } else if (dist < 50) {
+      zoom = 11;
+    } else if (dist < 60) {
+      zoom = 8;
+    } else if (dist < 70) {
+      zoom = 6;
+    } else {
+      zoom = 4;
+    }
+
+    return zoom;
   };
 
   getGeoLocation = () => {
@@ -50,25 +80,29 @@ export class App extends Component {
   };
 
   resetCenter = () => {
-    this.setState({
+    const { coords } = this.state.data;
+    this.setState((prevState) => ({
+      ...prevState,
       currentLatLng: {
-        lat: this.state.data.coords[0].lat,
-        lng: this.state.data.coords[0].lng
+        lat: coords[Math.floor(coords.length/2)].lat,
+        lng: coords[Math.floor(coords.length/2)].lng
       }
-    });
+    }));
   };
 
   componentWillMount() {
     if (trips.length >= 1) {
       let data = require('./trips/' + trips[0]);
+      let zoom = this.calcZoom(data);
       this.setState({
         tripName: trips[0],
         tripList: trips,
         data: data,
         currentLatLng: {
-          lat: data.coords[0].lat,
-          lng: data.coords[0].lng,
-        }
+          lat: data.coords[Math.floor(data.coords.length/2)].lat,
+          lng: data.coords[Math.floor(data.coords.length/2)].lng,
+        },
+        zoom: zoom,
       })
     }
   }
@@ -91,6 +125,7 @@ export class App extends Component {
           <MapContainer
             data={this.state.data}
             currentLatLng={this.state.currentLatLng}
+            zoom={this.state.zoom}
           />
         </div>
       </div>

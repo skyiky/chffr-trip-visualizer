@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Map, GoogleApiWrapper, Polyline, Marker} from 'google-maps-react';
+//import MaterialIcon, {colorPalette} from 'material-icons-react';
 import './App.css';
 
 const dimensions = {
@@ -18,7 +19,6 @@ export class MapContainer extends Component {
     this.pathColor = this.pathColor.bind(this);
     this.createPolyline = this.createPolyline.bind(this);
     this.getLocationTripEnd = this.getLocationTripEnd.bind(this);
-    this.panToCenter = this.panToCenter.bind(this);
   }
 
   createPolylinePath = (aLat, aLng, bLat, bLng) => {
@@ -88,9 +88,6 @@ export class MapContainer extends Component {
     return {lat: coords[coords.length-1].lat, lng: coords[coords.length-1].lng};
   };
 
-  panToCenter = () => {
-  };
-
   render() {
 
     return (
@@ -98,7 +95,7 @@ export class MapContainer extends Component {
         <Map
           ref={this.mapRef}
           google={this.props.google}
-          zoom={13}
+          zoom={this.props.zoom}
           style={dimensions}
           styles={this.props.mapStyles}
           initialCenter={{
@@ -115,8 +112,6 @@ export class MapContainer extends Component {
           <Marker
             name={'Trip End'}
             position={this.getLocationTripEnd()}
-            onClick={this.panToCenter()}
-            // TODO: icon
           />
 
         </Map>
@@ -132,6 +127,7 @@ MapContainer.defaultProps = {
 MapContainer.propTypes = {
   data: PropTypes.object,
   currentLatLng: PropTypes.object,
+  zoom: PropTypes.number,
 };
 
 export default GoogleApiWrapper({
