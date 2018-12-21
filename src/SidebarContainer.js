@@ -10,6 +10,7 @@ export class SidebarContainer extends Component {
     super(props);
 
     this.setTripHandler = this.setTripHandler.bind(this);
+    this.setLineWeight = this.setLineWeight.bind(this)
     this.calcAvgSpeed = this.calcAvgSpeed.bind(this);
     this.calcMaxSpeed = this.calcMaxSpeed.bind(this);
     this.calcDistanceTravelled = this.calcDistanceTravelled.bind(this);
@@ -20,6 +21,10 @@ export class SidebarContainer extends Component {
 
   setTripHandler = (e) => {
     this.props.setTripHandler(e.target.value);
+  };
+
+  setLineWeight = (e) => {
+    this.props.setLineWeight(e.target.value);
   };
 
   calcAvgSpeed = (props) => {
@@ -86,29 +91,29 @@ export class SidebarContainer extends Component {
 
   render() {
     let children = [];
-
     return (
       <Sidebar
         sidebar={
           <SidebarComponent
             setTripHandler={this.setTripHandler}
-            resetCenter={this.props.resetCenter}
+            setLineWeight={this.setLineWeight}
             avgSpeed={this.calcAvgSpeed()}
             maxSpeed={this.calcMaxSpeed()}
             distanceTravelled={this.calcDistanceTravelled()}
             startTime={this.calcStartTime()}
             endTime={this.calcEndTime()}
             totalTime={this.calcTotalTimeElapsed()}
+            resetCenter={this.props.resetCenter}
             tripName={this.props.tripName}
             tripList={this.props.tripList}
+            lineWeight={this.props.lineWeight}
           />
         }
-        onSetOpen={this.onSetSidebarOpen}
         styles={{
           sidebar:
             {
               "background": "white",
-              "maxHeight": "440px",
+              "maxHeight": "600px",
               "margin": "auto 0",
               "width": "260px",
 
@@ -117,7 +122,6 @@ export class SidebarContainer extends Component {
             backgroundColor: "rgba(0,0,0,0)"
           }
         }}
-        transitions={true}
         defaultSidebarWidth={0}
         docked={true}
       >
@@ -129,9 +133,11 @@ export class SidebarContainer extends Component {
 
 SidebarContainer.propTypes = {
   setTripHandler: PropTypes.func,
+  setLineWeight: PropTypes.func,
   resetCenter: PropTypes.func,
   tripName: PropTypes.string,
   tripList: PropTypes.array,
+  lineWeight: PropTypes.number,
   data: PropTypes.object,
 };
 

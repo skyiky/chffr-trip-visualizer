@@ -50,7 +50,6 @@ export class SidebarComponent extends Component {
 
   render() {
     const {classes} = this.props;
-
     return (
       <div className="sidebar-component">
         <div className="sidebar-component-nav">
@@ -99,6 +98,11 @@ export class SidebarComponent extends Component {
           </div>
         </div>
         <Divider/>
+        <div className="sidebar-component-nav">
+          <h2 className="sidebar-component-nav-heading">Settings</h2>
+        </div>
+        <Divider/>
+
         <div className="sidebar-component-stat-select">
           <form className={classes.root} autoComplete="off">
             <FormControl className={classes.formControl}>
@@ -119,6 +123,38 @@ export class SidebarComponent extends Component {
             </FormControl>
           </form>
         </div>
+
+        <Divider/>
+
+        <div className="sidebar-component-stat-select">
+          <form className={classes.root} autoComplete="off">
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink htmlFor="line-weight-plh">Line Thickness</InputLabel>
+
+              <Select
+                value={this.props.lineWeight}
+                onChange={this.props.setLineWeight}
+                displayEmpty
+                name="Line Thickness"
+                className={classes.selectEmpty}
+                input={<Input name={this.props.lineWeight.toString(10)}
+                              id="line-weight-plh"/>}
+              >
+                <MenuItem value={3}>
+                  Fine
+                </MenuItem>
+                <MenuItem value={6}>
+                  Medium
+                </MenuItem>
+                <MenuItem value={9}>
+                  Thick
+                </MenuItem>
+              </Select>
+              <FormHelperText>Set Thickness of Trip Line</FormHelperText>
+            </FormControl>
+          </form>
+        </div>
+
         <div className="sidebar-component-stat-button">
           <Button variant="outlined" onClick={this.props.resetCenter}>
             Recenter
@@ -131,15 +167,17 @@ export class SidebarComponent extends Component {
 
 SidebarComponent.propTypes = {
   setTripHandler: PropTypes.func,
+  setLineWeight: PropTypes.func,
   resetCenter: PropTypes.func,
-  tripName: PropTypes.string,
   tripList: PropTypes.array,
-  avgSpeed: PropTypes.number,
-  maxSpeed: PropTypes.number,
-  distanceTravelled: PropTypes.number,
+  tripName: PropTypes.string,
   startTime: PropTypes.string,
   endTime: PropTypes.string,
   totalTime: PropTypes.string,
+  avgSpeed: PropTypes.number,
+  maxSpeed: PropTypes.number,
+  distanceTravelled: PropTypes.number,
+  lineWeight: PropTypes.number,
   classes: PropTypes.object.isRequired,
 };
 

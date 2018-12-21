@@ -1,25 +1,31 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Map, GoogleApiWrapper, Polyline, Marker} from 'google-maps-react';
-//import MaterialIcon, {colorPalette} from 'material-icons-react';
 import './App.css';
 
 const dimensions = {
   width: '100%',
   height: '100%'
-
 };
 
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      x: 0,
+    };
     this.mapRef = React.createRef();
 
+    this.getLocationTripEnd = this.getLocationTripEnd.bind(this);
     this.createPolylinePath = this.createPolylinePath.bind(this);
     this.pathColor = this.pathColor.bind(this);
     this.createPolyline = this.createPolyline.bind(this);
-    this.getLocationTripEnd = this.getLocationTripEnd.bind(this);
   }
+
+  getLocationTripEnd = () => {
+    const { coords } = this.props.data;
+    return {lat: coords[coords.length-1].lat, lng: coords[coords.length-1].lng};
+  };
 
   createPolylinePath = (aLat, aLng, bLat, bLng) => {
     let path = [];
@@ -62,34 +68,30 @@ export class MapContainer extends Component {
     let polylines = [];
 
     if (this.props.data != null) {
-      for (let i = 1; i < this.props.data.coords.length; i += 2) {
-        let aLat = this.props.data.coords[i - 1].lat;
-        let aLng = this.props.data.coords[i - 1].lng;
-        let bLat = this.props.data.coords[i].lat;
-        let bLng = this.props.data.coords[i].lng;
+
+      for (let i = 1; i < this.props.data.coords.length; i += 1) {
+        let aLat, aLng, bLat, bLng;
+        aLat = this.props.data.coords[i - 1].lat;
+        aLng = this.props.data.coords[i - 1].lng;
+        bLat = this.props.data.coords[i].lat;
+        bLng = this.props.data.coords[i].lng;
         let speedAverage = (this.props.data.coords[i - 1].speed + this.props.data.coords[i].speed) / 2;
         polylines.push(
           <Polyline
             path={this.createPolylinePath(aLat, aLng, bLat, bLng)}
             strokeColor={this.pathColor(speedAverage)}
             strokeOpacity={1}
-            strokeWeight={6}
+            strokeWeight={this.props.lineWeight}
             key={i / 2}
           />
         );
       }
     }
-
+    console.log("i was called");
     return polylines;
   };
 
-  getLocationTripEnd = () => {
-    const { coords } = this.props.data;
-    return {lat: coords[coords.length-1].lat, lng: coords[coords.length-1].lng};
-  };
-
   render() {
-
     return (
       <div>
         <Map
@@ -107,6 +109,7 @@ export class MapContainer extends Component {
             lng: this.props.currentLatLng.lng
           }}
         >
+
           {this.createPolyline()}
 
           <Marker
@@ -127,6 +130,7 @@ MapContainer.defaultProps = {
 MapContainer.propTypes = {
   data: PropTypes.object,
   currentLatLng: PropTypes.object,
+  lineWeight: PropTypes.number,
   zoom: PropTypes.number,
 };
 
