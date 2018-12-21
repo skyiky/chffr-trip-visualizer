@@ -20,12 +20,12 @@ self.__precacheManifest = [
     "url": "/comma-challenge-2019/static/js/runtime~main.1413f50a.js"
   },
   {
-    "revision": "e9dbbe8a693dd275c16d32feb101f1c1",
-    "url": "/comma-challenge-2019/static/media/roboto-latin-100.e9dbbe8a.woff"
-  },
-  {
     "revision": "987b84570ea69ee660455b8d5e91f5f1",
     "url": "/comma-challenge-2019/static/media/roboto-latin-100.987b8457.woff2"
+  },
+  {
+    "revision": "e9dbbe8a693dd275c16d32feb101f1c1",
+    "url": "/comma-challenge-2019/static/media/roboto-latin-100.e9dbbe8a.woff"
   },
   {
     "revision": "6232f43d15b0e7a0bf0fe82e295bdd06",
@@ -36,16 +36,16 @@ self.__precacheManifest = [
     "url": "/comma-challenge-2019/static/media/roboto-latin-100italic.d704bb3d.woff"
   },
   {
-    "revision": "d69924b98acd849cdeba9fbff3f88ea6",
-    "url": "/comma-challenge-2019/static/media/roboto-latin-300italic.d69924b9.woff2"
-  },
-  {
     "revision": "55536c8e9e9a532651e3cf374f290ea3",
     "url": "/comma-challenge-2019/static/media/roboto-latin-300.55536c8e.woff2"
   },
   {
     "revision": "a1471d1d6431c893582a5f6a250db3f9",
     "url": "/comma-challenge-2019/static/media/roboto-latin-300.a1471d1d.woff"
+  },
+  {
+    "revision": "d69924b98acd849cdeba9fbff3f88ea6",
+    "url": "/comma-challenge-2019/static/media/roboto-latin-300italic.d69924b9.woff2"
   },
   {
     "revision": "210a7c781f5a354a0e4985656ab456d9",
@@ -68,12 +68,12 @@ self.__precacheManifest = [
     "url": "/comma-challenge-2019/static/media/roboto-latin-400italic.9680d5a0.woff"
   },
   {
-    "revision": "de8b7431b74642e830af4d4f4b513ec9",
-    "url": "/comma-challenge-2019/static/media/roboto-latin-500.de8b7431.woff"
-  },
-  {
     "revision": "285467176f7fe6bb6a9c6873b3dad2cc",
     "url": "/comma-challenge-2019/static/media/roboto-latin-500.28546717.woff2"
+  },
+  {
+    "revision": "de8b7431b74642e830af4d4f4b513ec9",
+    "url": "/comma-challenge-2019/static/media/roboto-latin-500.de8b7431.woff"
   },
   {
     "revision": "510dec37fa69fba39593e01a469ee018",
@@ -92,12 +92,12 @@ self.__precacheManifest = [
     "url": "/comma-challenge-2019/static/media/roboto-latin-700.cf6613d1.woff"
   },
   {
-    "revision": "846d1890aee87fde5d8ced8eba360c3a",
-    "url": "/comma-challenge-2019/static/media/roboto-latin-700italic.846d1890.woff"
-  },
-  {
     "revision": "010c1aeee3c6d1cbb1d5761d80353823",
     "url": "/comma-challenge-2019/static/media/roboto-latin-700italic.010c1aee.woff2"
+  },
+  {
+    "revision": "846d1890aee87fde5d8ced8eba360c3a",
+    "url": "/comma-challenge-2019/static/media/roboto-latin-700italic.846d1890.woff"
   },
   {
     "revision": "19b7a0adfdd4f808b53af7e2ce2ad4e5",

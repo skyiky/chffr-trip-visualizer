@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/comma-challenge-2019/precache-manifest.eeec0aff49417a4eec5c6af3ff8e849f.js"
+  "/comma-challenge-2019/precache-manifest.a0fda824778487eb4b9514f96c15208f.js"
 );
 
 workbox.clientsClaim();
