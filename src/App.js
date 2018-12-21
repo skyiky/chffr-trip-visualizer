@@ -43,7 +43,7 @@ export class App extends Component {
         lat: data.coords[Math.floor(data.coords.length/2)].lat,
         lng: data.coords[Math.floor(data.coords.length/2)].lng,
       },
-      zoom: zoom
+      zoom: zoom,
     }));
   };
 
@@ -92,7 +92,12 @@ export class App extends Component {
 
   resetCenter = () => {
     const { coords } = this.state.data;
+
+    //  ugly solution (force zoom prop to update in map for rerender)
     let zoom = this.calcZoom(this.state.data);
+    if (this.state.zoom === zoom) {
+      zoom--;
+    }
 
     this.setState((prevState) => ({
       ...prevState,
@@ -100,7 +105,7 @@ export class App extends Component {
         lat: coords[Math.floor(coords.length/2)].lat,
         lng: coords[Math.floor(coords.length/2)].lng
       },
-      zoom: zoom+1
+      zoom: zoom
     }));
   };
 

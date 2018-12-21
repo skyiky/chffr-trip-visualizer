@@ -123,9 +123,9 @@ export class MapContainer extends Component {
   };
 
   centerMoved = (mapProps, map) => {
-    console.log(mapProps, map);
     this.props.setCenter(map.center.lat(), map.center.lng());
   };
+
 
   render() {
     return (

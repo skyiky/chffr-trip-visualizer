@@ -113,7 +113,7 @@ export class SidebarContainer extends Component {
           sidebar:
             {
               "background": "white",
-              "maxHeight": "600px",
+              "maxHeight": "580px",
               "margin": "auto 0",
               "width": "260px",
 
@@ -122,7 +122,7 @@ export class SidebarContainer extends Component {
             backgroundColor: "rgba(0,0,0,0)"
           }
         }}
-        defaultSidebarWidth={0}
+        defaultSidebarWidth={260}
         docked={true}
       >
         {children}
