@@ -146,7 +146,7 @@ export class SidebarComponent extends Component {
                 <MenuItem value={6}>
                   Medium
                 </MenuItem>
-                <MenuItem value={9}>
+                <MenuItem value={8}>
                   Thick
                 </MenuItem>
               </Select>

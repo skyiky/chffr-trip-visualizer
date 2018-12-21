@@ -16,7 +16,7 @@ export class App extends Component {
       tripList: null,
       data: null,
       zoom: 10,
-      lineWeight: 6,
+      lineWeight: 8,
       currentLatLng: {
         lat: 0,
         lng: 0
@@ -28,6 +28,7 @@ export class App extends Component {
     this.calcZoom = this.calcZoom.bind(this);
     this.getGeoLocation = this.getGeoLocation.bind(this);
     this.resetCenter = this.resetCenter.bind(this);
+    this.setCenter = this.setCenter.bind(this);
   }
 
   setTripHandler = (tripName) => {
@@ -91,12 +92,25 @@ export class App extends Component {
 
   resetCenter = () => {
     const { coords } = this.state.data;
+    let zoom = this.calcZoom(this.state.data);
+
     this.setState((prevState) => ({
       ...prevState,
       currentLatLng: {
         lat: coords[Math.floor(coords.length/2)].lat,
         lng: coords[Math.floor(coords.length/2)].lng
-      }
+      },
+      zoom: zoom+1
+    }));
+  };
+
+  setCenter = (lat, lng) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      currentLatLng: {
+        lat: lat,
+        lng: lng,
+      },
     }));
   };
 
@@ -109,7 +123,7 @@ export class App extends Component {
         tripList: trips,
         data: data,
         zoom: zoom,
-        lineWeight: 6,
+        lineWeight: 8,
         currentLatLng: {
           lat: data.coords[Math.floor(data.coords.length/2)].lat,
           lng: data.coords[Math.floor(data.coords.length/2)].lng,
@@ -140,6 +154,7 @@ export class App extends Component {
             currentLatLng={this.state.currentLatLng}
             zoom={this.state.zoom}
             lineWeight={this.state.lineWeight}
+            setCenter={this.setCenter}
           />
         </div>
       </div>

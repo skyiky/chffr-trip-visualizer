@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Map, GoogleApiWrapper, Polyline, Marker} from 'google-maps-react';
+import {Map, GoogleApiWrapper, Polyline, Marker, InfoWindow} from 'google-maps-react';
 import './App.css';
 
 const dimensions = {
@@ -12,15 +12,45 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      x: 0,
+      showInfoWindow: false,
+      speed: 0,
+      infoWindowLatLng: {
+        lat: 0,
+        lng: 0
+      }
     };
-    this.mapRef = React.createRef();
 
+    this.showInfoWindow = this.showInfoWindow.bind(this);
+    this.hideInfoWindow = this.hideInfoWindow.bind(this);
     this.getLocationTripEnd = this.getLocationTripEnd.bind(this);
     this.createPolylinePath = this.createPolylinePath.bind(this);
     this.pathColor = this.pathColor.bind(this);
     this.createPolyline = this.createPolyline.bind(this);
+    this.centerMoved = this.centerMoved.bind(this);
   }
+
+  showInfoWindow = (lat, lng, speedAverage) => {
+    if (this.state.showInfoWindow === false) {
+      this.setState((prevState) => ({
+        ...prevState,
+        showInfoWindow: true,
+        speed: speedAverage.toFixed(1),
+        infoWindowLatLng: {
+          lat: lat,
+          lng: lng
+        },
+      }))
+    }
+  };
+
+  hideInfoWindow = () => {
+    if (this.state.showInfoWindow === true) {
+      this.setState((prevState) => ({
+        ...prevState,
+        showInfoWindow: false,
+      }));
+    }
+  };
 
   getLocationTripEnd = () => {
     const { coords } = this.props.data;
@@ -82,20 +112,25 @@ export class MapContainer extends Component {
             strokeColor={this.pathColor(speedAverage)}
             strokeOpacity={1}
             strokeWeight={this.props.lineWeight}
+            onMouseover={() => this.showInfoWindow(aLat, aLng, speedAverage)}
+            onMouseout={() => this.hideInfoWindow()}
             key={i / 2}
           />
         );
       }
     }
-    console.log("i was called");
     return polylines;
+  };
+
+  centerMoved = (mapProps, map) => {
+    console.log(mapProps, map);
+    this.props.setCenter(map.center.lat(), map.center.lng());
   };
 
   render() {
     return (
       <div>
         <Map
-          ref={this.mapRef}
           google={this.props.google}
           zoom={this.props.zoom}
           style={dimensions}
@@ -106,11 +141,20 @@ export class MapContainer extends Component {
           }}
           center={{
             lat: this.props.currentLatLng.lat,
-            lng: this.props.currentLatLng.lng
+            lng: this.props.currentLatLng.lng,
           }}
+          onDragend={this.centerMoved}
         >
 
           {this.createPolyline()}
+
+          <InfoWindow
+            position={this.state.infoWindowLatLng}
+            visible={this.state.showInfoWindow}>
+            <div>
+              <h1>{this.state.speed} m/ph</h1>
+            </div>
+          </InfoWindow>
 
           <Marker
             name={'Trip End'}
@@ -132,6 +176,7 @@ MapContainer.propTypes = {
   currentLatLng: PropTypes.object,
   lineWeight: PropTypes.number,
   zoom: PropTypes.number,
+  setCenter: PropTypes.func,
 };
 
 export default GoogleApiWrapper({
