@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/comma-challenge-2019/precache-manifest.1633c4a6bd6facf7114120d6e23aad53.js"
+  "/chffr-trip-visualizer/precache-manifest.1a895835b249ce6961b127b28470da23.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/comma-challenge-2019/index.html", {
+workbox.routing.registerNavigationRoute("/chffr-trip-visualizer/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
