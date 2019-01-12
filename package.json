@@ -1,8 +1,8 @@
 {
-  "name": "comma-challenge-2019",
+  "name": "chffr-trip-visualizer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://skyiky.github.io/comma-challenge-2019",
+  "homepage": "https://skyiky.github.io/chffr-trip-visualizer",
   "dependencies": {
     "@material-ui/core": "^3.7.0",
     "@material-ui/icons": "^3.0.1",
@@ -17,7 +17,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1",
+    "react-scripts": "^2.1.3",
     "react-sidebar": "^3.0.2",
     "typeface-roboto": "0.0.54"
   },
